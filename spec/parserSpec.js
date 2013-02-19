@@ -67,7 +67,22 @@ describe("parser", function () {
 		it("splits vars even if whitespace around dilemiter", function () {
 			var result = parser.toObject("title: foobar\n - \ncontent: hello", "fruitcake.md");
 			expect(result.content).toEqual("hello");
-		})
+		});
+
+		// it("splits vars even if MULTIPLE whitespace around dilemiter", function () {
+		// 	var result = parser.toObject("title: foobar\n  -  \ncontent: hello", "fruitcake.md");
+		// 	expect(result.content).toEqual("hello");
+		// });
+
+		it("does not assign UNDEFINED to variables left blank", function () {
+			var result = parser.toObject("title:\n-\ncontent:", "fruitcake.md");
+			expect(result.content).toEqual("");
+		});
+
+		it("trims the values of the vars", function () {
+			var result = parser.toObject("title:    baby    ", "fruitcake.md");
+			expect(result.title).toEqual("baby");
+		});
 	});
 
 });
