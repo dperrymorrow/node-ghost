@@ -1,0 +1,21 @@
+{
+  "author": "David Morrow",
+  "name": "node-ghost",
+  "description": "markdown to html site via dropbox",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dperrymorrow/node-ghost.git"
+  },
+  "engines": {
+   "node": "v0.8.18",
+   "npm": "1.2.2"
+  },
+  "dependencies": {
+    "jasmine-node": "1.2.3",
+    "marked": "0.2.8",
+    "handlebars": "1.0.9",
+    "underscore": "1.4.4",
+    "underscore.string": "2.3.1"
+  }
+}
