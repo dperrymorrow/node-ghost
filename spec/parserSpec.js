@@ -55,6 +55,20 @@ describe("parser", function () {
 			asyncSpecWait();
 		});
 
+		it("can process files concurrently", function () {
+			parser.parseFile("spec/fixtures/page_no_title.md", function (data) {
+				expect(data.title).toEqual("Page no title");
+				asyncSpecDone();
+			});
+
+			parser.parseFile("spec/fixtures/example_page.md", function (data) {
+				expect(data.title).toEqual("foobar");
+				asyncSpecDone();
+			});
+
+			asyncSpecWait();
+		});
+
 		it("template defaults to default if not present", function () {
 			parser.parseFile("spec/fixtures/page_no_title.md", function (data) {
 				expect(data.template).toEqual("default.html");
@@ -69,10 +83,10 @@ describe("parser", function () {
 			expect(result.content).toEqual("hello");
 		});
 
-		// it("splits vars even if MULTIPLE whitespace around dilemiter", function () {
-		// 	var result = parser.toObject("title: foobar\n  -  \ncontent: hello", "fruitcake.md");
-		// 	expect(result.content).toEqual("hello");
-		// });
+		it("splits vars even if MULTIPLE whitespace around dilemiter", function () {
+			var result = parser.toObject("title: foobar\n  -  \ncontent: hello", "fruitcake.md");
+			expect(result.content).toEqual("hello");
+		});
 
 		it("does not assign UNDEFINED to variables left blank", function () {
 			var result = parser.toObject("title:\n-\ncontent:", "fruitcake.md");
