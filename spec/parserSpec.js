@@ -88,12 +88,12 @@ describe("parser", function () {
 
 		it("splits vars even if whitespace around dilemiter", function () {
 			var result = new Parser().toObject("title: foobar\n - \ncontent: hello", "fruitcake.md");
-			expect(result.content).toEqual("hello");
+			expect(result.content).toEqual("<p>hello</p>\n");
 		});
 
 		it("splits vars even if MULTIPLE whitespace around dilemiter", function () {
 			var result = Parser().toObject("title: foobar\n  -  \ncontent: hello", "fruitcake.md");
-			expect(result.content).toEqual("hello");
+			expect(result.content).toEqual("<p>hello</p>\n");
 		});
 
 		it("does not assign UNDEFINED to variables left blank", function () {
