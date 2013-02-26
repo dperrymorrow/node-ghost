@@ -97,12 +97,17 @@ describe("parser", function () {
 		});
 
 		it("does not assign UNDEFINED to variables left blank", function () {
-			var result = new Parser().toObject("title:\n-\ncontent:", "fruitcake.md");
+			var result = new Parser().toObject("title:\n-\ncontent:");
 			expect(result.content).toEqual("");
 		});
 
+		it("trims whitespace", function () {
+			var result = new Parser().toObject("title:\n  -  \ncontent: hello");
+			expect(result.content).toEqual("<p>hello</p>\n");
+		});
+
 		it("trims the values of the vars", function () {
-			var result = new Parser().toObject("title:    baby    ", "fruitcake.md");
+			var result = new Parser().toObject("title:    baby    ");
 			expect(result.title).toEqual("baby");
 		});
 	});
