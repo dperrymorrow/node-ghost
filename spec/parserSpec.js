@@ -15,7 +15,7 @@ describe("parser", function () {
 			var parse = new Parser();
 			spyOn(parse, 'toObject');
 
-			parse.parseFile("spec/fixtures/example_page.md", function (data) {
+			parse.parseFile("spec/example_app/example_page.md", function (data) {
 				expect(parse.toObject).wasCalled();
 				asyncSpecDone();
 			});
@@ -27,7 +27,7 @@ describe("parser", function () {
 			var parse = new Parser();
 			spyOn(parse, 'toObject');
 
-			parse.parseFile("spec/-----fixtures/example_page.md", function (data) {
+			parse.parseFile("spec/-----example_app/example_page.md", function (data) {
 				expect(parse.toObject).not.wasCalled();
 				expect(data.error).not.toBeUndefined();
 				asyncSpecDone();
@@ -39,7 +39,7 @@ describe("parser", function () {
 
 	describe("toObject method", function () {
 		it("parses a file to an object", function () {
-			new Parser().parseFile("spec/fixtures/example_page.md", function (data) {
+			new Parser().parseFile("spec/example_app/example_page.md", function (data) {
 				expect(data.title).toEqual('foobar');
 				expect(_s.include(data.content, "Lorem")).toBe(true);
 				expect(data.template).toEqual("blog_page.html");
@@ -50,7 +50,7 @@ describe("parser", function () {
 		});
 
 		it("gets the title from the filename if no title present", function () {
-			new Parser().parseFile("spec/fixtures/page_no_title.md", function (data) {
+			new Parser().parseFile("spec/example_app/page_no_title.md", function (data) {
 				expect(data.title).toEqual("Page No Title");
 				asyncSpecDone();
 			});
@@ -59,17 +59,17 @@ describe("parser", function () {
 		});
 
 		it("can process files concurrently", function () {
-			new Parser().parseFile("spec/fixtures/page_no_title.md", function (data) {
+			new Parser().parseFile("spec/example_app/page_no_title.md", function (data) {
 				expect(data.title).toEqual("Page No Title");
 				asyncSpecDone();
 			});
 
-			new Parser().parseFile("spec/fixtures/example_page.md", function (data) {
+			new Parser().parseFile("spec/example_app/example_page.md", function (data) {
 				expect(data.title).toEqual("foobar");
 				asyncSpecDone();
 			});
 
-			new Parser().parseFile("spec/fixtures/page_no_title.md", function (data) {
+			new Parser().parseFile("spec/example_app/page_no_title.md", function (data) {
 				expect(data.title).toEqual("Page No Title");
 				asyncSpecDone();
 			});
@@ -78,7 +78,7 @@ describe("parser", function () {
 		});
 
 		it("template defaults to default if not present", function () {
-			new Parser().parseFile("spec/fixtures/page_no_title.md", function (data) {
+			new Parser().parseFile("spec/example_app/page_no_title.md", function (data) {
 				expect(data.template).toEqual("default.html");
 				asyncSpecDone();
 			});
