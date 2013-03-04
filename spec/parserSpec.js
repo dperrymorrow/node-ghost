@@ -86,13 +86,27 @@ describe("parser", function () {
 			asyncSpecWait();
 		});
 
+		it("fixes bad variable names", function () {
+			var parser = new Parser();
+			parser.filePath = "filename.md";
+			var result = parser.toObject("   test key : foobar");
+			expect(_.has(result, 'testKey')).toBe(true);
+		});
+
+		it("can parse single variable", function () {
+			var parser = new Parser();
+			parser.filePath = "filename.md";
+			var result = parser.toObject("content: foobar");
+			expect(result.content).toEqual('<p>foobar</p>\n');
+		});
+
 		it("splits vars even if whitespace around dilemiter", function () {
-			var result = new Parser().toObject("title: foobar\n - \ncontent: hello", "fruitcake.md");
+			var result = new Parser().toObject("title: foobar\n - \ncontent: hello");
 			expect(result.content).toEqual("<p>hello</p>\n");
 		});
 
 		it("splits vars even if MULTIPLE whitespace around dilemiter", function () {
-			var result = Parser().toObject("title: foobar\n  -     \ncontent: hello", "fruitcake.md");
+			var result = Parser().toObject("title: foobar\n  -     \ncontent: hello");
 			expect(result.content).toEqual("<p>hello</p>\n");
 		});
 
