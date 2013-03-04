@@ -106,13 +106,16 @@ describe("parser", function () {
 		});
 
 		it("splits vars even if MULTIPLE whitespace around dilemiter", function () {
-			var result = Parser().toObject("title: foobar\n  -     \ncontent: hello");
+			var result = new Parser().toObject("title: foobar\n  -     \ncontent: hello");
 			expect(result.content).toEqual("<p>hello</p>\n");
 		});
 
 		it("does not assign UNDEFINED to variables left blank", function () {
-			var result = new Parser().toObject("title:\n-\ncontent:");
+			var parser = new Parser()
+			parser.filePath = "filename-something.md";
+			var result = parser.toObject("title:\n-\ncontent:");
 			expect(result.content).toEqual("");
+			expect(result.title).toEqual("Filename Something");
 		});
 
 		it("trims whitespace", function () {
@@ -121,8 +124,9 @@ describe("parser", function () {
 		});
 
 		it("trims the values of the vars", function () {
-			var result = new Parser().toObject("title:    baby   you are    mine ");
-			expect(result.title).toEqual("baby you are mine");
+			var result = new Parser().toObject('title:    "baby"  & you are    mine ');
+			expect(result.title).toEqual('"baby" & you are mine');
+			expect(result.urlSlug).toEqual("baby-you-are-mine")
 		});
 	});
 
