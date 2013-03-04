@@ -51,7 +51,7 @@ describe("parser", function () {
 
 		it("gets the title from the filename if no title present", function () {
 			new Parser().parseFile("spec/fixtures/page_no_title.md", function (data) {
-				expect(data.title).toEqual("Page no title");
+				expect(data.title).toEqual("Page No Title");
 				asyncSpecDone();
 			});
 
@@ -60,7 +60,7 @@ describe("parser", function () {
 
 		it("can process files concurrently", function () {
 			new Parser().parseFile("spec/fixtures/page_no_title.md", function (data) {
-				expect(data.title).toEqual("Page no title");
+				expect(data.title).toEqual("Page No Title");
 				asyncSpecDone();
 			});
 
@@ -70,7 +70,7 @@ describe("parser", function () {
 			});
 
 			new Parser().parseFile("spec/fixtures/page_no_title.md", function (data) {
-				expect(data.title).toEqual("Page no title");
+				expect(data.title).toEqual("Page No Title");
 				asyncSpecDone();
 			});
 
@@ -92,7 +92,7 @@ describe("parser", function () {
 		});
 
 		it("splits vars even if MULTIPLE whitespace around dilemiter", function () {
-			var result = Parser().toObject("title: foobar\n  -  \ncontent: hello", "fruitcake.md");
+			var result = Parser().toObject("title: foobar\n  -     \ncontent: hello", "fruitcake.md");
 			expect(result.content).toEqual("<p>hello</p>\n");
 		});
 
@@ -107,8 +107,8 @@ describe("parser", function () {
 		});
 
 		it("trims the values of the vars", function () {
-			var result = new Parser().toObject("title:    baby    ");
-			expect(result.title).toEqual("baby");
+			var result = new Parser().toObject("title:    baby   you are    mine ");
+			expect(result.title).toEqual("baby you are mine");
 		});
 	});
 
