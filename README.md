@@ -1,3 +1,4 @@
+[![Stories in Ready](http://badge.waffle.io/dperrymorrow/node-ghost.png)](http://waffle.io/dperrymorrow/node-ghost)  
 node-ghost
 ==========
 
